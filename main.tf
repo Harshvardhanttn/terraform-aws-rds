@@ -27,7 +27,7 @@ resource "aws_db_instance" "rds_db" {
   engine                          = var.engine
   engine_version                  = var.engine_version
   snapshot_identifier             = var.snapshot_identifier != "" ? var.snapshot_identifier : null
-  identifier                      = "${var.environment}-${local.identifier}"
+  identifier                      = "${local.identifier}"
   instance_class                  = var.instance_class
   db_name                         = var.database_name
   backup_retention_period         = var.retention
@@ -50,7 +50,7 @@ resource "aws_db_instance" "rds_db" {
 
 resource "aws_rds_cluster" "aurora_cluster" {
   count                               = !var.create_rds && var.create_aurora ? 1 : 0
-  cluster_identifier                  = "${var.environment}-${local.identifier}"
+  cluster_identifier                  = "${local.identifier}"
   engine                              = var.engine
   engine_version                      = var.engine_version
   database_name                       = var.database_name
