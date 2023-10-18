@@ -73,7 +73,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
   count                   = var.create_aurora == true ? var.count_aurora_instances : 0
-  identifier              = "${var.environment}-${local.identifier}-${count.index}"
+  identifier              = "${local.identifier}"
   cluster_identifier      = aws_rds_cluster.aurora_cluster[0].id
   instance_class          = var.instance_class
   engine                  = aws_rds_cluster.aurora_cluster[0].engine
