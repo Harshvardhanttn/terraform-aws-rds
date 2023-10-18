@@ -10,10 +10,10 @@ resource "random_string" "rds_db_password" {
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = "${var.environment}-${local.identifier}-subnet_group"
+  name       = "${local.identifier}-subnet_group"
   subnet_ids = var.subnet_ids
   tags = {
-    Name = "${var.environment}-${local.identifier}-subnet_group"
+    Name = "${local.identifier}-subnet_group"
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_db_instance" "rds_db" {
   maintenance_window              = var.maintenance_window
   backup_window                   = var.backup_window
   skip_final_snapshot             = var.skip_final_snapshot
-  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.environment}-${local.identifier}-final-snapshot" : var.final_snapshot_identifier
+  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${local.identifier}-final-snapshot" : var.final_snapshot_identifier
   auto_minor_version_upgrade      = var.auto_minor_version_upgrade
   parameter_group_name            = var.create_db_parameter_group == true ? aws_db_parameter_group.rds_custom_db_pg[count.index].name : ""
 
@@ -60,7 +60,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   backup_retention_period             = var.retention
   db_subnet_group_name                = aws_db_subnet_group.rds_subnet_group.name
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
-  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${var.environment}-${local.identifier}-final-snapshot" : var.final_snapshot_identifier
+  final_snapshot_identifier       = var.final_snapshot_identifier == "" ? "${local.identifier}-final-snapshot" : var.final_snapshot_identifier
   skip_final_snapshot             = var.skip_final_snapshot
   vpc_security_group_ids              = [aws_security_group.rds_db.id]
   apply_immediately                   = var.apply_immediately
