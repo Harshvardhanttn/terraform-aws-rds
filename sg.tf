@@ -1,5 +1,5 @@
 resource "aws_security_group" "rds_db" {
-  name   = "${var.environment}-${local.identifier}-rds-sg"
+  name   = "${local.identifier}-rds-sg"
   vpc_id = var.vpc_id
   
   ingress {
@@ -20,6 +20,6 @@ resource "aws_security_group" "rds_db" {
     create_before_destroy = true
   }
   tags = {
-    Name = "${var.environment}-${local.identifier}-rds-sg"
+    Name = "${local.identifier}-rds-sg"
   }
 }
